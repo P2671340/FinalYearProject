@@ -1,0 +1,11 @@
+To activate site first do pip install Flask (to open terminal in vs code press the ... next top run at the top of the page and press new terminal) to make sure Flask installed.
+then do pythin main.py to activate it
+the it will show something like:
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 241-538-083
+
+ Login details are cameronmpatel@gmail.com and password is Password123
