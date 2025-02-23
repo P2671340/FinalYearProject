@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Page</title>
+    <script>
+        // JavaScript to run scan when button is clicked
+        function runScan() {
+            document.getElementById('scan-results').innerText = "Running scan...";
+
+            fetch('/run-scan')
+                .then(response => response.text())
+                .then(data => {
+                    // Update the page with scan results
+                    document.getElementById('scan-results').innerHTML = data;
+                })
+                .catch(error => {
+                    document.getElementById('scan-results').innerText = "Error running scan.";
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 </head>
 <body>
-    <h2>Welcome, {{ username }}!</h2>
-    <p>You have successfully logged in.</p>
+    <h2>HomePage</h2>
+    <p>To run a scan, please click Run Scan below.</p>
+
+    <!-- Button to trigger the scan -->
+    <button onclick="runScan()">Run Scan</button>
+
+    <h3>Scan Results:</h3>
+    <div id="scan-results">
+        <!-- Scan results will be displayed here -->
+        {% if scan_data %}
+            <ul>
+            {% for key, value in scan_data.items() %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No scan data available.</p>
+        {% endif %}
+    </div>
+
     <a href="/logout">Logout</a>
 </body>
 </html>

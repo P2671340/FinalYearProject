@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+import subprocess
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -62,6 +64,32 @@ def user():
     if 'username' in session:
         username = session['username']
         return render_template('user.html', username=username)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/run-scan')
+def run_scan():
+    if 'username' in session:
+        # Use subprocess to run the Node.js script and capture the output
+        try:
+            result = subprocess.run(
+                ['node', 'index.js', '--json=./output.json'],  # Adjust script and output format as needed
+                capture_output=True,
+                text=True,
+                check=True
+            )
+
+            # Load JSON output
+            with open('output.json', 'r') as f:
+                scan_data = json.load(f)
+
+            # Return the scan results as HTML to be injected into the page
+            return render_template('scan_results.html', scan_data=scan_data)
+
+        except subprocess.CalledProcessError as e:
+            return f"Error running scan: {e.output}"
+
     else:
         return redirect(url_for('login'))
 
