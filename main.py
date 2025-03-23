@@ -15,6 +15,11 @@ def init_db():
     conn.commit()
     conn.close()
 
+#Health check route
+@app.route('/health')
+def health_check():
+    return "OK", 200
+
 @app.route('/')
 def index():
     if 'username' in session:
