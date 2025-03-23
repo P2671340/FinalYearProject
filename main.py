@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import subprocess
@@ -47,7 +47,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        hashed_password = generate_password_hash(password)
+        hashed_password = generate_password_hash("yourpassword", method="ppkdf2:sha256")
+        print(hashed_password)
 
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
@@ -80,12 +81,12 @@ def run_scan():
                 check=True
             )
 
-            # Load JSON output
+            # Load JSON output from the file
             with open('output.json', 'r') as f:
                 scan_data = json.load(f)
 
-            # Return the scan results as HTML to be injected into the page
-            return render_template('scan_results.html', scan_data=scan_data)
+            # Return the scan results as a JSON response
+            return jsonify(scan_data)  # This sends the scan data as JSON
 
         except subprocess.CalledProcessError as e:
             return f"Error running scan: {e.output}"

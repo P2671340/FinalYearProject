@@ -1,0 +1,38 @@
+{
+  "cpu": {
+    "manufacturer": "AMD",
+    "brand": "Ryzen 9 7900X 12-Core Processor",
+    "cores": 24,
+    "speed": 4.7
+  },
+  "memory": {
+    "total": 33457156096,
+    "free": 17645678592,
+    "used": 15811485696
+  },
+  "disk": [
+    {
+      "type": "Unspecified",
+      "size": 2000396321280
+    },
+    {
+      "type": "Unspecified",
+      "size": 1000202273280
+    },
+    {
+      "type": "SSD",
+      "size": 500105249280
+    },
+    {
+      "type": "HD",
+      "size": 2000396321280
+    }
+  ],
+  "network": [
+    {
+      "iface": "Ethernet",
+      "received_bytes": 6411282501,
+      "transmitted_bytes": 283428615
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <script>
+        window.onload = async function() {
+            // Fetch the scan results from the Flask route
+            const response = await fetch('/run-scan');
+            const scanData = await response.json();
+
+            // Display the scan data
+            let output = '<h1>Scan Results</h1><ul>';
+            scanData.forEach(item => {
+                output += `<li>Resource: ${item.resource}, Usage: ${item.usage}</li>`;
+            });
+            output += '</ul>';
+
+            // Inject the output into the body of the page
+            document.body.innerHTML = output;
+        };
+    </script>
+</head>
+<body>
+    <!-- The scan results will be dynamically injected here -->
+</body>
+</html>
