@@ -4,6 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import subprocess
 import json
 
+#Import from the custom modules
+from scanner import check_system_resources
+from azure_check import check_azure_vms
+from security_check import check_open_ports
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -77,6 +82,16 @@ def user():
 @app.route('/run-scan')
 def run_scan():
     if 'username' in session:
+        # System resource checks
+        system_misconfigurations = check_system_resources()
+
+        # Azure misconfiguration checks
+        azure_misconfigurations = check_azure_vms()
+
+        # Security Checks
+        security_issues = check_open_ports()
+
+
         # Use subprocess to run the Node.js script and capture the output
         try:
             result = subprocess.run(
@@ -89,6 +104,11 @@ def run_scan():
             # Load JSON output from the file
             with open('output.json', 'r') as f:
                 scan_data = json.load(f)
+            
+            # Combine all findings into the result
+            scan_data['system_misconfigurations'] = system_misconfigurations
+            scan_data['azure_misconfigurations'] = azure_misconfigurations
+            scan_data['security_issues'] = security_issues
 
             # Return the scan results as a JSON response
             return jsonify(scan_data)  # This sends the scan data as JSON
