@@ -7,8 +7,8 @@
   },
   "memory": {
     "total": 33457156096,
-    "free": 12389347328,
-    "used": 21067808768
+    "free": 16622432256,
+    "used": 16834723840
   },
   "disk": [
     {
@@ -31,8 +31,8 @@
   "network": [
     {
       "iface": "Ethernet",
-      "received_bytes": 3796170651,
-      "transmitted_bytes": 221806157
+      "received_bytes": 34916625471,
+      "transmitted_bytes": 2229527661
     }
   ]
 }
